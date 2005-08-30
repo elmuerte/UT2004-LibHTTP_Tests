@@ -1,3 +1,5 @@
+#pragma ucpp notice - PreCompile it with UCPP
+#pragma ucpp version
 #pragma ucpp include ../../UsUnit/macros.inc
 class TEST_Algorithms extends TestCase;
 
@@ -10,10 +12,15 @@ function run()
     #if TEST_PERFORMANCE
     local float timing;
     #endif
+    local HttpUtil.xURL URLstruct;
+
+    // simple hash algorithm testing
 
     s1 = "http://www.beyondunreal.com";
     s2 = "http://www.elmuerte.com";
-    CHECK(s1 != s2, "hash(http://www.beyondunreal.com) != hash(http://www.elmuerte.com)");
+    h1 = class'HttpCache'.static.createHash(s1);
+    h2 = class'HttpCache'.static.createHash(s2);
+    CHECK((s1 != s2) && (h1 != h2), "hash(http://www.beyondunreal.com) != hash(http://www.elmuerte.com)");
 
     for (i = 0; i < 10; i++)
     {
@@ -34,10 +41,16 @@ function run()
         CHECK((s1 != s2) && (h1 != h2), "s1 != s2 && hash(s1) != hash(s2);");
     }
 
+    // md5 checksum testing
 
     s1 = "http://www.beyondunreal.com";
     s2 = "http://www.elmuerte.com";
-    CHECK(s1 != s2, "hash(http://www.beyondunreal.com) != hash(http://www.elmuerte.com)");
+    s3 = class'HttpUtil'.static.MD5String(s1);
+    s4 = class'HttpUtil'.static.MD5String(s2);
+    CHECK((s1 != s2) && (h1 != h2), "hash(http://www.beyondunreal.com) != hash(http://www.elmuerte.com)");
+
+    CHECK(class'HttpUtil'.static.MD5String("") == "d41d8cd98f00b204e9800998ecf8427e", "md5(\"\") == d41d8cd98f00b204e9800998ecf8427e");
+    CHECK(class'HttpUtil'.static.MD5String("testestest") == "01b03dbf1fa5a4c56066f27b0fc95efb", "md5(\"testestest\") == 01b03dbf1fa5a4c56066f27b0fc95efb");
 
     for (i = 0; i < 10; i++)
     {
@@ -55,9 +68,24 @@ function run()
         s4 = class'HttpUtil'.static.MD5String(s2);
 
 
-        CHECK((s1 != s2) && (h1 != h2), "s1 != s2 && md5(s1) != md5(s2);");
+        CHECK((s1 != s2) && (s3 != s4), "s1 != s2 && md5(s1) != md5(s2);");
     }
 
+    // base64 testing
+
+
+    // URL parsing testing
+    CHECK(class'HttpUtil'.static.parseURL("protocol://username:password@hostname/location?query#hash", URLstruct), "Valid URL parsing: protocol://username:password@hostname/location?query#hash");
+    CHECK(URLstruct.protocol == "protocol");
+    CHECK(URLstruct.username == "username");
+    CHECK(URLstruct.password == "password");
+    CHECK(URLstruct.hostname == "hostname");
+    CHECK(URLstruct.location == "/location");
+    CHECK(URLstruct.query == "query");
+    CHECK(URLstruct.hash == "hash");
+    CHECK(!class'HttpUtil'.static.parseURL("protocol:///location?query#hash", URLstruct), "Invalid URL parsing: protocol:///location?query#hash");
+    CHECK(!class'HttpUtil'.static.parseURL("://hostname/location?query#hash", URLstruct), "Invalid URL parsing: ://hostname/location?query#hash");
+    CHECK(!class'HttpUtil'.static.parseURL("protocol://", URLstruct), "Invalid URL parsing: protocol://");
 
     Done();
 }
