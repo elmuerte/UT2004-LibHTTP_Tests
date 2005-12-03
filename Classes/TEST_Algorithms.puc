@@ -75,18 +75,22 @@ function run()
 
 
     // URL parsing testing
-    CHECK(class'HttpUtil'.static.parseURL("protocol://username:password@hostname/location?query#hash", URLstruct), "Valid URL parsing: protocol://username:password@hostname/location?query#hash");
+    CHECK(class'HttpUtil'.static.parseURL("protocol://username:password@hostname:80/location?query#hash", URLstruct), "Valid URL parsing: protocol://username:password@hostname/location?query#hash");
     CHECK(URLstruct.protocol == "protocol");
     CHECK(URLstruct.username == "username");
     CHECK(URLstruct.password == "password");
     CHECK(URLstruct.hostname == "hostname");
+    CHECK(URLstruct.port == 80);
     CHECK(URLstruct.location == "/location");
     CHECK(URLstruct.query == "query");
     CHECK(URLstruct.hash == "hash");
+    CHECK(class'HttpUtil'.static.xURLtoLocation(URLstruct) == "/location?query#hash");
+    CHECK(class'HttpUtil'.static.xURLtoString(URLstruct, true) == "protocol://username:password@hostname:80/location?query#hash", class'HttpUtil'.static.xURLtoString(URLstruct, true)$" == protocol://username:password@hostname:80/location?query#hash");
     CHECK(!class'HttpUtil'.static.parseURL("protocol:///location?query#hash", URLstruct), "Invalid URL parsing: protocol:///location?query#hash");
     CHECK(!class'HttpUtil'.static.parseURL("://hostname/location?query#hash", URLstruct), "Invalid URL parsing: ://hostname/location?query#hash");
     CHECK(!class'HttpUtil'.static.parseURL("protocol://", URLstruct), "Invalid URL parsing: protocol://");
-
+    CHECK(class'HttpUtil'.static.getPortByProtocol("HtTp") == 80);
+    CHECK(class'HttpUtil'.static.getPortByProtocol("unknown") == 0);
     Done();
 }
 
