@@ -26,4 +26,10 @@ defaultproperties
     URLdesc[2]="Basic authentication"
     URLS[3]="http://TestUser:TestPass@%TestLocation%auth-digest/"
     URLdesc[3]="Digest authentication"
+    URLS[4]="http://%TestLocation%get.php?token=%Token%"
+    URLdesc[4]="Request variables"
+    URLS[5]="http://TestUser:TestPass@%TestLocation%redirect.php"
+    URLdesc[5]="Redirect"
+    URLS[6]="http://TestUser:TestPass@%TestLocation%auth-basic"
+    URLdesc[6]="Redirect and authentication"
 }

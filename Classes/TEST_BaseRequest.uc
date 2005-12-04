@@ -8,7 +8,7 @@ class TEST_BaseRequest extends TestCase abstract config;
  */
 var globalconfig string TestLocation;
 
-const token = "#LIBHTTP_4C696248545450";
+const token = "LIBHTTP_4C696248545450";
 
 var array<string> URLs;
 var array<string> URLdesc;
@@ -35,17 +35,21 @@ function tearDown()
 
 function string getUrl(int i)
 {
-    return repl(URLS[i], "%TestLocation%", TestLocation);
+    local string url;
+    url = repl(URLS[i], "%TestLocation%", TestLocation);
+    url = repl(url, "%token%", token);
+    return url;
 }
 
 function SockError(HttpSock Sender, string ErrorMessage, optional string Param1, optional string Param2)
 {
-    check(false, "Socket error for test #"$idx$": "$ErrorMessage$"("$Param1$") ("$Param2$")"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_BaseRequest.uc"$"("$string(43)$")");
+    check(false, "Socket error for test #"$idx$": "$ErrorMessage$"("$Param1$") ("$Param2$")"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_BaseRequest.uc"$"("$string(46)$")");
     SetTimer(0.001, false);
 }
 
 event Timer()
 {
+    Sock.ClearRequestData();
     run();
 }
 
@@ -93,7 +97,7 @@ function DownloadComplete(HttpSock Sender)
     }
     f.Destroy();
 
-    check(bFoundToken, "Found LibHTTP token for test #"$idx@URLdesc[idx]$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_BaseRequest.uc"$"("$string(96)$")");
+    check(bFoundToken, "Found LibHTTP token for test #"$idx@URLdesc[idx]$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_BaseRequest.uc"$"("$string(100)$")");
     SetTimer(0.001, false);
 }
 

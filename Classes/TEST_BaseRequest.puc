@@ -8,7 +8,7 @@ class TEST_BaseRequest extends TestCase abstract config;
  */
 var globalconfig string TestLocation;
 
-const token = "#LIBHTTP_4C696248545450";
+const token = "LIBHTTP_4C696248545450";
 
 var array<string> URLs;
 var array<string> URLdesc;
@@ -35,7 +35,10 @@ function tearDown()
 
 function string getUrl(int i)
 {
-    return repl(URLS[i], "%TestLocation%", TestLocation);
+    local string url;
+    url = repl(URLS[i], "%TestLocation%", TestLocation);
+    url = repl(url, "%token%", token);
+    return url;
 }
 
 function SockError(HttpSock Sender, string ErrorMessage, optional string Param1, optional string Param2)
@@ -46,6 +49,7 @@ function SockError(HttpSock Sender, string ErrorMessage, optional string Param1,
 
 event Timer()
 {
+    Sock.ClearRequestData();
     run();
 }
 
