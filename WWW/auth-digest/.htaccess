@@ -1,0 +1,4 @@
+AuthType Digest
+AuthName "AuthType Digest test"
+Require valid-user
+AuthDigestFile /home/webservers/eldevel.tds/html/LibHTTP/auth-digest/.htpasswd

@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "AuthType Basic test"
+Require valid-user
+AuthUserFile /home/webservers/eldevel.tds/html/LibHTTP/auth-basic/.htpasswd

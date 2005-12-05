@@ -19,7 +19,7 @@ var int idx;
 
 function setUp()
 {
-    URLdesc.length = URLs.length;
+    if (URLdesc.length < URLs.length) URLdesc.length = URLs.length;
     Sock = spawn(class'HttpSock');
     Sock.iVerbose = class'HttpUtil'.default.LOGDATA;
     Sock.OnComplete = DownloadComplete;
