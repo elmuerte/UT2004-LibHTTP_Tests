@@ -32,4 +32,6 @@ defaultproperties
     URLdesc[5]="Redirect"
     URLS[6]="http://TestUser:TestPass@%TestLocation%auth-basic"
     URLdesc[6]="Redirect and authentication"
+    URLS[7]="http://diveintomark.org/tests/client/http/300.xml"
+    URLdesc[7]="HTTP 300 test"
 }
