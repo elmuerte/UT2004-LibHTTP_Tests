@@ -10,4 +10,5 @@ defaultproperties
     TestClasses[1]=class'TEST_Requests'
     TestClasses[2]=class'TEST_Posts'
     TestClasses[3]=class'TEST_Cookie'
+    TestClasses[4]=class'TEST_Cache'
 }

@@ -98,8 +98,11 @@ function DownloadComplete(HttpSock Sender)
     f.Destroy();
 
     check(bFoundToken, "Found LibHTTP token for test #"$idx@URLdesc[idx]$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_BaseRequest.uc"$"("$string(100)$")");
+    AdditionalChecks();
     SetTimer(0.001, false);
 }
+
+function AdditionalChecks();
 
 defaultproperties
 {

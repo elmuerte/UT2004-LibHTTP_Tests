@@ -13,6 +13,20 @@ function run()
     else Done();
 }
 
+function AdditionalChecks()
+{
+    switch (idx)
+    {
+        case 0:
+            check(InStr(sock.getReturnHeader("Content-Type", "error"), "text/plain") == 0, "Is text/plain"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Requests.uc"$"("$string(21)$")");
+            check(sock.ReturnData.length == 10, "Has 10 lines"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Requests.uc"$"("$string(22)$")");
+            break;
+        case 1:
+            check(InStr(sock.getReturnHeader("Content-Type", "error"), "text/html") == 0, "Is text/html"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Requests.uc"$"("$string(25)$")");
+            break;
+    }
+}
+
 defaultproperties
 {
     TestName="LibHTTP Request Tests"

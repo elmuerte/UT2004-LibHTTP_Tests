@@ -13,6 +13,20 @@ function run()
     else Done();
 }
 
+function AdditionalChecks()
+{
+    switch (idx)
+    {
+        case 0:
+            CHECK(InStr(sock.getReturnHeader("Content-Type", "error"), "text/plain") == 0, "Is text/plain");
+            CHECK(sock.ReturnData.length == 10, "Has 10 lines");
+            break;
+        case 1:
+            CHECK(InStr(sock.getReturnHeader("Content-Type", "error"), "text/html") == 0, "Is text/html");
+            break;
+    }
+}
+
 defaultproperties
 {
     TestName="LibHTTP Request Tests"

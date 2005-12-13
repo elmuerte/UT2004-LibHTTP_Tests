@@ -75,22 +75,24 @@ function run()
 
 
     // URL parsing testing
-    check(class'HttpUtil'.static.parseURL("protocol://username:password@hostname:80/location?query#hash", URLstruct), "Valid URL parsing: protocol://username:password@hostname/location?query#hash"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(78)$")");
+    check(class'HttpUtil'.static.parseURL("protocol://user%3a%3Aname:p%40ssword@hostname:80/location?query#hash", URLstruct), "Valid URL parsing: protocol://username:password@hostname/location?query#hash"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(78)$")");
     check(URLstruct.protocol == "protocol", "URLstruct.protocol == \"protocol\""$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(79)$")");
-    check(URLstruct.username == "username", "URLstruct.username == \"username\""$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(80)$")");
-    check(URLstruct.password == "password", "URLstruct.password == \"password\""$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(81)$")");
+    check(URLstruct.username == "user::name", "URLstruct.username == \"user::name\""$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(80)$")");
+    check(URLstruct.password == "p@ssword", "URLstruct.password == \"p@ssword\""$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(81)$")");
     check(URLstruct.hostname == "hostname", "URLstruct.hostname == \"hostname\""$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(82)$")");
     check(URLstruct.port == 80, "URLstruct.port == 80"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(83)$")");
     check(URLstruct.location == "/location", "URLstruct.location == \"/location\""$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(84)$")");
     check(URLstruct.query == "query", "URLstruct.query == \"query\""$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(85)$")");
     check(URLstruct.hash == "hash", "URLstruct.hash == \"hash\""$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(86)$")");
     check(class'HttpUtil'.static.xURLtoLocation(URLstruct) == "/location?query#hash", "class'HttpUtil'.static.xURLtoLocation(URLstruct) == \"/location?query#hash\""$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(87)$")");
-    check(class'HttpUtil'.static.xURLtoString(URLstruct, true) == "protocol://username:password@hostname:80/location?query#hash", class'HttpUtil'.static.xURLtoString(URLstruct, true)$" == protocol://username:password@hostname:80/location?query#hash"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(88)$")");
+    check(class'HttpUtil'.static.xURLtoString(URLstruct, true) == "protocol://user%3A%3Aname:p%40ssword@hostname:80/location?query#hash", class'HttpUtil'.static.xURLtoString(URLstruct, true)$" == protocol://username:password@hostname:80/location?query#hash"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(88)$")");
     check(!class'HttpUtil'.static.parseURL("protocol:///location?query#hash", URLstruct), "Invalid URL parsing: protocol:///location?query#hash"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(89)$")");
     check(!class'HttpUtil'.static.parseURL("://hostname/location?query#hash", URLstruct), "Invalid URL parsing: ://hostname/location?query#hash"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(90)$")");
     check(!class'HttpUtil'.static.parseURL("protocol://", URLstruct), "Invalid URL parsing: protocol://"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(91)$")");
     check(class'HttpUtil'.static.getPortByProtocol("HtTp") == 80, "class'HttpUtil'.static.getPortByProtocol(\"HtTp\") == 80"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(92)$")");
     check(class'HttpUtil'.static.getPortByProtocol("unknown") == 0, "class'HttpUtil'.static.getPortByProtocol(\"unknown\") == 0"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(93)$")");
+
+    check(class'HttpUtil'.static.RawUrlDecode("Te%27tg%22%5B%20%26%3A%40") == "Te'tg\"[ &:@", "Te%27tg%22%5B%20%26%3A%40 == Te'tg\"[ &:@"$chr(3)$"d:\\dev\\ut2004\\ut2-code\\LibHTTP_Tests\\Classes\\TEST_Algorithms.uc"$"("$string(95)$")");
     Done();
 }
 
